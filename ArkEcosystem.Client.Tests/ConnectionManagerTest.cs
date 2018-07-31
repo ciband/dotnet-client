@@ -34,7 +34,7 @@ namespace ArkEcosystem.Client.Tests
         public void Connect()
         {
             var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>());
-            Assert.AreEqual(conn, _cm.Connection());
+            Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>());
             Assert.AreEqual(1, _cm.GetConnections().Count);
         }
         
@@ -51,7 +51,7 @@ namespace ArkEcosystem.Client.Tests
         public void Connection()
         {
             var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
-            Assert.AreEqual(conn, _cm.Connection("test"));
+            Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>("test"));
             Assert.AreEqual(1, _cm.GetConnections().Count);
         }
         
@@ -74,8 +74,8 @@ namespace ArkEcosystem.Client.Tests
             var conn1 = _cm.Connect(TestHelper.MockConnection<Client.API.One.One>(), "test1");
             var conn2 = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test2");
             var dict = _cm.GetConnections();
-            Assert.AreEqual(conn1, dict[0]);
-            Assert.AreEqual(conn2, dict[1]);
+            Assert.AreEqual(conn1, dict["test1"]);
+            Assert.AreEqual(conn2, dict["test2"]);
         }
     }
 }
