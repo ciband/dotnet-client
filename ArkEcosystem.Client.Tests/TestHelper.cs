@@ -35,7 +35,7 @@ namespace ArkEcosystem.Client.Tests
         const string MOCK_HOST = "https://127.0.0.1:4003/api/";
         const string FIXTURES_PATH = "../../../Fixtures/";
 
-        static MockHttpMessageHandler;
+        static MockHttpMessageHandler mockHttp;
 
         static TestHelper()
         {
