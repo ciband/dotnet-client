@@ -29,6 +29,7 @@ namespace ArkEcosystem.Client.Tests
     public class ConnectionManagerTest
     {
         private Client.ConnectionManager _cm = new Client.ConnectionManager();
+        private readonly string _testHostName = "https://10.0.0.0/";
         
         [TestMethod]
         public void Connect()
@@ -52,8 +53,7 @@ namespace ArkEcosystem.Client.Tests
         [TestMethod]
         public void Connection()
         {
-            var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
-            var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
+            var conn = _cm.Connect(new Client.Connection<Client.API.Two.Two>(_testHostName), "test");
             Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>("test"));
             Assert.AreEqual(1, _cm.GetConnections().Count);
         }
