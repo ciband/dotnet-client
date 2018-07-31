@@ -28,57 +28,62 @@ namespace ArkEcosystem.Client.Tests
     [TestClass]
     public class ConnectionManagerTest
     {
-        private Client.ConnectionManager _cm = new Client.ConnectionManager();
         private readonly string _testHostName = "https://10.0.0.0/";
         
         [TestMethod]
         public void Connect()
         {
+            var cm = new Client.ConnectionManager();
             var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
-            var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>());
-            Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>());
-            Assert.AreEqual(1, _cm.GetConnections().Count);
+            var conn = cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>());
+            Assert.AreEqual(conn, cm.Connection<Client.API.Two.Two>());
+            Assert.AreEqual(1, cm.GetConnections().Count);
         }
         
         [TestMethod]
         public void Disconnect()
         {
+            var cm = new Client.ConnectionManager();
             var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
-            _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
-            Assert.AreEqual(1, _cm.GetConnections().Count);
-            _cm.Disconnect("test");
-            Assert.AreEqual(0, _cm.GetConnections().Count);
+            cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
+            Assert.AreEqual(1, cm.GetConnections().Count);
+            cm.Disconnect("test");
+            Assert.AreEqual(0, cm.GetConnections().Count);
         }
         
         [TestMethod]
         public void Connection()
         {
-            var conn = _cm.Connect(new Client.Connection<Client.API.Two.Two>(_testHostName), "test");
-            Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>("test"));
-            Assert.AreEqual(1, _cm.GetConnections().Count);
+            var cm = new Client.ConnectionManager();
+            var conn = cm.Connect(new Client.Connection<Client.API.Two.Two>(_testHostName), "test");
+            Assert.AreEqual(conn, cm.Connection<Client.API.Two.Two>("test"));
+            Assert.AreEqual(1, cm.GetConnections().Count);
         }
         
         [TestMethod]
         public void GetDefaultConnection()
         {
-            Assert.AreEqual("main", _cm.GetDefaultConnection());
+            var cm = new Client.ConnectionManager();
+            Assert.AreEqual("main", cm.GetDefaultConnection());
         }
         
         [TestMethod]
         public void SetDefaultConnection()
         {
-            _cm.SetDefaultConnection("test");
-            Assert.AreEqual("test", _cm.GetDefaultConnection());
+            var cm = new Client.ConnectionManager();
+            cm.SetDefaultConnection("test");
+            Assert.AreEqual("test", cm.GetDefaultConnection());
         }
         
         [TestMethod]
         public void GetConnections()
         {
+            var cm = new Client.ConnectionManager();
             var req1 = TestHelper.MockHttpRequestOne("peers"); // dummy request
-            var conn1 = _cm.Connect(TestHelper.MockConnection<Client.API.One.One>(), "test1");
+            var conn1 = cm.Connect(TestHelper.MockConnection<Client.API.One.One>(), "test1");
             var req2 = TestHelper.MockHttpRequestTwo("peers"); // dummy request
-            var conn2 = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test2");
-            var dict = _cm.GetConnections();
+            var conn2 = cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test2");
+            var dict = cm.GetConnections();
             Assert.AreEqual(2, dict.Count);
             Assert.IsNotNull(dict["test1"]);
             Assert.IsNotNull(dict["test2"]);
