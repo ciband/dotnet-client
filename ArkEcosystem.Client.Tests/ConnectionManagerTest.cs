@@ -35,7 +35,7 @@ namespace ArkEcosystem.Client.Tests
         {
             TestHelper.MockHttpRequestTwo("peers"); // dummy request
             var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>());
-            Assert.AreEqual(conn, _cm.Connection<Client.API.Api>());
+            Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>());
             Assert.AreEqual(1, _cm.GetConnections().Count);
         }
         
@@ -54,7 +54,7 @@ namespace ArkEcosystem.Client.Tests
         {
             TestHelper.MockHttpRequestTwo("peers"); // dummy request
             var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
-            Assert.AreEqual(conn, _cm.Connection<Client.API.Api>("test"));
+            Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>("test"));
             Assert.AreEqual(1, _cm.GetConnections().Count);
         }
         
