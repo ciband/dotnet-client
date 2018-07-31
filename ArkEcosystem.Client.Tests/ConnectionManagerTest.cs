@@ -80,8 +80,8 @@ namespace ArkEcosystem.Client.Tests
             var conn2 = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test2");
             var dict = _cm.GetConnections();
             Assert.AreEqual(2, dict.Count);
-            Assert.AreNotNull(dict["test1"] as Client.Connection<Client.API.One.One>);
-            Assert.AreNotNull(dict["test2"] as Client.Connection<Client.API.Two.Two>);
+            Assert.IsNotNull(dict["test1"] as Client.Connection<Client.API.One.One>);
+            Assert.IsNotNull(dict["test2"] as Client.Connection<Client.API.Two.Two>);
         }
     }
 }
