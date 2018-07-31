@@ -36,11 +36,14 @@ namespace ArkEcosystem.Client.Tests
         const string FIXTURES_PATH = "../../../Fixtures/";
 
         static MockHttpMessageHandler mockHttp;
-        
-        public static MockedRequest MockHttpRequestOne(string path)
+
+        static TestHelper()
         {
             mockHttp = new MockHttpMessageHandler();
-            
+        }
+
+        public static MockedRequest MockHttpRequestOne(string path)
+        {
             return mockHttp
                 .When(string.Format("{0}{1}", MOCK_HOST, path))
                 .Respond("application/json", "{'success' : true}");
@@ -48,8 +51,6 @@ namespace ArkEcosystem.Client.Tests
 
         public static MockedRequest MockHttpRequestTwo(string endpoint)
         {
-            mockHttp = new MockHttpMessageHandler();
-            
             var fixtureName = endpoint.Replace("/", "-") + ".json";
             var path = Path.Combine(FIXTURES_PATH, "Two", fixtureName);
             var fixture = File.ReadAllText(path);
@@ -61,8 +62,6 @@ namespace ArkEcosystem.Client.Tests
 
         public static Connection<T> MockConnection<T>() where T : Api
         {
-            mockHttp = new MockHttpMessageHandler();
-            
             var client = mockHttp.ToHttpClient();
             client.BaseAddress = new Uri(MOCK_HOST);
 
