@@ -55,7 +55,8 @@ namespace ArkEcosystem.Client.Tests
         public void Connection()
         {
             var cm = new Client.ConnectionManager();
-            var conn = cm.Connect(new Client.Connection<Client.API.Two.Two>(_testHostName), "test");
+            var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
+            var conn = cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
             Assert.AreEqual(conn, cm.Connection<Client.API.Two.Two>("test"));
             Assert.AreEqual(1, cm.GetConnections().Count);
         }
