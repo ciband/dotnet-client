@@ -33,7 +33,7 @@ namespace ArkEcosystem.Client.Tests
         [TestMethod]
         public void Connect()
         {
-            TestHelper.MockHttpRequestTwo("peers"); // dummy request
+            var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
             var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>());
             Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>());
             Assert.AreEqual(1, _cm.GetConnections().Count);
@@ -42,7 +42,7 @@ namespace ArkEcosystem.Client.Tests
         [TestMethod]
         public void Disconnect()
         {
-            TestHelper.MockHttpRequestTwo("peers"); // dummy request
+            var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
             _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
             Assert.AreEqual(1, _cm.GetConnections().Count);
             _cm.Disconnect("test");
@@ -52,7 +52,7 @@ namespace ArkEcosystem.Client.Tests
         [TestMethod]
         public void Connection()
         {
-            TestHelper.MockHttpRequestTwo("peers"); // dummy request
+            var req = TestHelper.MockHttpRequestTwo("peers"); // dummy request
             var conn = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test");
             Assert.AreEqual(conn, _cm.Connection<Client.API.Two.Two>("test"));
             Assert.AreEqual(1, _cm.GetConnections().Count);
@@ -74,9 +74,9 @@ namespace ArkEcosystem.Client.Tests
         [TestMethod]
         public void GetConnections()
         {
-            TestHelper.MockHttpRequestOne("peers"); // dummy request
+            var req1 = TestHelper.MockHttpRequestOne("peers"); // dummy request
             var conn1 = _cm.Connect(TestHelper.MockConnection<Client.API.One.One>(), "test1");
-            TestHelper.MockHttpRequestTwo("peers"); // dummy request
+            var req2 = TestHelper.MockHttpRequestTwo("peers"); // dummy request
             var conn2 = _cm.Connect(TestHelper.MockConnection<Client.API.Two.Two>(), "test2");
             var dict = _cm.GetConnections();
             Assert.AreEqual(2, dict.Count);
