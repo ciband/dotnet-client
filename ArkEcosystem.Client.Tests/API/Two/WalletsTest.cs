@@ -156,17 +156,43 @@ namespace ArkEcosystem.Client.Tests.API.Two
         {
             TestHelper.MockHttpRequestTwo("wallets");
 
-            //Test Address
+            // Test Address
             var response = TestHelper.MockConnection<Two>().Api.Wallets.Search(addressSearchParameters);
             AssertResponseSearchForAddress(response);
+            
+            // Test Public Key
+            response = TestHelper.MockConnection<Two>().Api.Wallets.Search(publicKeySearchParameters);
+            AssertResponseSearchForPublicKey(response);
+            
+            // Test Balance
+            response = TestHelper.MockConnection<Two>().Api.Wallets.Search(balanceSearchParameters);
+            AssertResponseSearchForBalance(response);
+            
+            // Test Is Delegate
+            response = TestHelper.MockConnection<Two>().Api.Wallets.Search(isDelegateSearchParameters);
+            AssertResponseSearchForIsDelegate(response);
         }
 
         [TestMethod]
         public async Task SearchAsync()
         {
-            //TestHelper.MockHttpRequestTwo("wallets");
-            //var response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(search_parameters);
-            //AssertResponseSearch(response);
+            TestHelper.MockHttpRequestTwo("wallets");
+
+            // Test Address
+            var response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(addressSearchParameters);
+            AssertResponseSearchForAddress(response);
+            
+            // Test Public Key
+            response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(publicKeySearchParameters);
+            AssertResponseSearchForPublicKey(response);
+            
+            // Test Balance
+            response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(balanceSearchParameters);
+            AssertResponseSearchForBalance(response);
+            
+            // Test Is Delegate
+            response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(isDelegateSearchParameters);
+            AssertResponseSearchForIsDelegate(response);
         }
 
         [TestMethod]
@@ -333,5 +359,60 @@ namespace ArkEcosystem.Client.Tests.API.Two
             Assert.AreEqual(addressSearchParameters["address"], response.Data[0].Address);
 
         }
+        
+        private void AssertResponseSearchForPublicKey(Response<List<Wallet>> response)
+        {
+            Assert.AreEqual(1, response.Meta.Count);
+            Assert.AreEqual(1, response.Meta.PageCount);
+            Assert.AreEqual(1, response.Meta.TotalCount);
+            Assert.AreEqual(null, response.Meta.Next);
+            Assert.AreEqual(null, response.Meta.Previous);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Self);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.First);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Last);
+
+            CollectionAssert.AllItemsAreInstancesOfType(response.Data, typeof(Wallet));
+            CollectionAssert.AllItemsAreNotNull(response.Data);
+            CollectionAssert.AllItemsAreUnique(response.Data);
+            Assert.AreEqual(1, response.Data.Count());
+            Assert.AreEqual(addressSearchParameters["publicKey"], response.Data[0].PublicKey);
+        }
+        
+        private void AssertResponseSearchForBalance(Response<List<Wallet>> response)
+        {
+            Assert.AreEqual(1, response.Meta.Count);
+            Assert.AreEqual(1, response.Meta.PageCount);
+            Assert.AreEqual(1, response.Meta.TotalCount);
+            Assert.AreEqual(null, response.Meta.Next);
+            Assert.AreEqual(null, response.Meta.Previous);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Self);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.First);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Last);
+
+            CollectionAssert.AllItemsAreInstancesOfType(response.Data, typeof(Wallet));
+            CollectionAssert.AllItemsAreNotNull(response.Data);
+            CollectionAssert.AllItemsAreUnique(response.Data);
+            Assert.AreEqual(1, response.Data.Count());
+            //Assert.AreEqual(addressSearchParameters["balance"], response.Data[0].Balance);
+        }
+        
+        private void AssertResponseSearchForIsDelegate(Response<List<Wallet>> response)
+        {
+            Assert.AreEqual(1, response.Meta.Count);
+            Assert.AreEqual(1, response.Meta.PageCount);
+            Assert.AreEqual(1, response.Meta.TotalCount);
+            Assert.AreEqual(null, response.Meta.Next);
+            Assert.AreEqual(null, response.Meta.Previous);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Self);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.First);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Last);
+
+            CollectionAssert.AllItemsAreInstancesOfType(response.Data, typeof(Wallet));
+            CollectionAssert.AllItemsAreNotNull(response.Data);
+            CollectionAssert.AllItemsAreUnique(response.Data);
+            Assert.AreEqual(1, response.Data.Count());
+            //Assert.AreEqual(addressSearchParameters["isDelegate"], response.Data[0].IsDelegate);
+        }
+        
     }
 }
