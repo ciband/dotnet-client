@@ -29,11 +29,32 @@ using ArkEcosystem.Client.API.Two.Models;
 
 namespace ArkEcosystem.Client.Tests.API.Two
 {
+    using System;
     using Two = ArkEcosystem.Client.API.Two.Two;
 
     [TestClass]
     public class WalletsTest
     {
+        private Dictionary<string, string> addressSearchParameters = new Dictionary<string, string>
+        {
+            { "address", "AFnogpUHmLgnN11ExWQCyngL1RNB9J6i8Z" }
+        };
+
+        private Dictionary<string, string> publicKeySearchParameters = new Dictionary<string, string>
+        {
+            { "publicKey", "02f7acb179ddfddb2e220aa600921574646ac59fd3f1ae6255ada40b9a7fab75fd" }
+        };
+
+        private Dictionary<string, string> balanceSearchParameters = new Dictionary<string, string>
+        {
+            { "balance", "5000000000" }
+        };
+
+        private Dictionary<string, string> isDelegateSearchParameters = new Dictionary<string, string>
+        {
+            { "isDelegate", "true" }
+        };
+
         [TestMethod]
         public void All()
         {
@@ -133,29 +154,19 @@ namespace ArkEcosystem.Client.Tests.API.Two
         [TestMethod]
         public void Search()
         {
-            // TODO: missing fixture
-            // TestHelper.MockHttpRequestTwo("wallets/search");
+            TestHelper.MockHttpRequestTwo("wallets");
 
-            // var parameters = new Dictionary<string, string>
-            // {
-            //     { "username", "dummy" }
-            // };
-
-            // var response = TestHelper.MockConnection<Two>().Api.Wallets.Search(parameters);
+            //Test Address
+            var response = TestHelper.MockConnection<Two>().Api.Wallets.Search(addressSearchParameters);
+            AssertResponseSearchForAddress(response);
         }
 
         [TestMethod]
         public async Task SearchAsync()
         {
-            // TODO: missing fixture
-            // TestHelper.MockHttpRequestTwo("wallets/search");
-
-            // var parameters = new Dictionary<string, string>
-            // {
-            //     { "username", "dummy" }
-            // };
-
-            // var response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(parameters);
+            //TestHelper.MockHttpRequestTwo("wallets");
+            //var response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(search_parameters);
+            //AssertResponseSearch(response);
         }
 
         [TestMethod]
@@ -302,6 +313,25 @@ namespace ArkEcosystem.Client.Tests.API.Two
             CollectionAssert.AllItemsAreNotNull(response.Data);
             CollectionAssert.AllItemsAreUnique(response.Data);
             Assert.AreEqual(98, response.Data.Count());
+        }
+
+        private void AssertResponseSearchForAddress(Response<List<Wallet>> response)
+        {
+            Assert.AreEqual(1, response.Meta.Count);
+            Assert.AreEqual(1, response.Meta.PageCount);
+            Assert.AreEqual(1, response.Meta.TotalCount);
+            Assert.AreEqual(null, response.Meta.Next);
+            Assert.AreEqual(null, response.Meta.Previous);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Self);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.First);
+            Assert.AreEqual("/api/v2/wallets?page=1&limit=100", response.Meta.Last);
+
+            CollectionAssert.AllItemsAreInstancesOfType(response.Data, typeof(Wallet));
+            CollectionAssert.AllItemsAreNotNull(response.Data);
+            CollectionAssert.AllItemsAreUnique(response.Data);
+            Assert.AreEqual(1, response.Data.Count());
+            Assert.AreEqual(addressSearchParameters["address"], response.Data[0].Address);
+
         }
     }
 }
