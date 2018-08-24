@@ -179,19 +179,19 @@ namespace ArkEcosystem.Client.Tests.API.Two
             TestHelper.MockHttpRequestTwo("wallets");
 
             // Test Address
-            var response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(addressSearchParameters);
+            var response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(addressSearchParameters);
             AssertResponseSearchForAddress(response);
             
             // Test Public Key
-            response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(publicKeySearchParameters);
+            response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(publicKeySearchParameters);
             AssertResponseSearchForPublicKey(response);
             
             // Test Balance
-            response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(balanceSearchParameters);
+            response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(balanceSearchParameters);
             AssertResponseSearchForBalance(response);
             
             // Test Is Delegate
-            response = await TestHelper.MockConnection<Two>().Api.Wallets.Search(isDelegateSearchParameters);
+            response = await TestHelper.MockConnection<Two>().Api.Wallets.SearchAsync(isDelegateSearchParameters);
             AssertResponseSearchForIsDelegate(response);
         }
 
