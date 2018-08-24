@@ -343,6 +343,7 @@ namespace ArkEcosystem.Client.Tests.API.Two
 
         private void AssertResponseSearchForAddress(Response<List<Wallet>> response)
         {
+            Assert.IsNotNull(response);
             Assert.AreEqual(1, response.Meta.Count);
             Assert.AreEqual(1, response.Meta.PageCount);
             Assert.AreEqual(1, response.Meta.TotalCount);
@@ -362,6 +363,7 @@ namespace ArkEcosystem.Client.Tests.API.Two
         
         private void AssertResponseSearchForPublicKey(Response<List<Wallet>> response)
         {
+            Assert.IsNotNull(response);
             Assert.AreEqual(1, response.Meta.Count);
             Assert.AreEqual(1, response.Meta.PageCount);
             Assert.AreEqual(1, response.Meta.TotalCount);
@@ -380,6 +382,7 @@ namespace ArkEcosystem.Client.Tests.API.Two
         
         private void AssertResponseSearchForBalance(Response<List<Wallet>> response)
         {
+            Assert.IsNotNull(response);
             Assert.AreEqual(1, response.Meta.Count);
             Assert.AreEqual(1, response.Meta.PageCount);
             Assert.AreEqual(1, response.Meta.TotalCount);
@@ -398,6 +401,7 @@ namespace ArkEcosystem.Client.Tests.API.Two
         
         private void AssertResponseSearchForIsDelegate(Response<List<Wallet>> response)
         {
+            Assert.IsNotNull(response);
             Assert.AreEqual(1, response.Meta.Count);
             Assert.AreEqual(1, response.Meta.PageCount);
             Assert.AreEqual(1, response.Meta.TotalCount);
